@@ -33,7 +33,7 @@ int main(int ac, char *av[])
 			perror("Error: ");
 		if (child_pid == 0)
 		{
-			execve(args[0], args, environ);
+			execve(args[0], av, environ);
 			perror(av[0]);
 		}
 		wait(&status);
@@ -42,6 +42,6 @@ int main(int ac, char *av[])
 	}
 	free(args);
 	free(cmd_line);
-	write(1, "\n", 1);
+/*	write(1, "\n", 1); */
 	exit(0);
 }
