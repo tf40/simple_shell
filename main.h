@@ -16,4 +16,6 @@ extern char *environ[];
 
 /* Functions prototypes */
 ssize_t _getline(char **line, size_t *n, int fd);
+int _strlen(char *);
+char *_strcpy(char *, const char *);
 #endif

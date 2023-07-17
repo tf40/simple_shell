@@ -13,7 +13,6 @@ int main(int ac, char *av[])
 	pid_t child_pid;
 	int status, i;
 
-	(void) i;
 	(void) ac;
 	for (;;)
 	{
@@ -22,11 +21,15 @@ int main(int ac, char *av[])
 			break;
 		if (*cmd_line == EOF)
 			break;
-		cmd_line[strlen(cmd_line) - 1] = '\0';
+		cmd_line[_strlen(cmd_line) - 1] = '\0';
 
 		args = malloc(sizeof(char *) * 2);
-		args[0] = malloc(sizeof(char) * (strlen(cmd_line) + 1));
-		strcpy(args[0], cmd_line);
+		if (args == NULL)
+			perror("Error: ");
+		args[0] = malloc(sizeof(char) * (_strlen(cmd_line) + 1));
+		if (args[0] == NULL)
+			perror("Error: ");
+		_strcpy(args[0], cmd_line);
 		args[1] = NULL;
 		child_pid = fork();
 		if (child_pid < 0)
@@ -42,6 +45,5 @@ int main(int ac, char *av[])
 	}
 	free(args);
 	free(cmd_line);
-/*	write(1, "\n", 1); */
 	exit(0);
 }
