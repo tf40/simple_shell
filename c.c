@@ -14,13 +14,13 @@ int main(int ac, char *av[])
 	int status, i;
 
 	(void) ac;
+	write(1, "#cisfun$ ", 9);
 	for (;;)
 	{
-		write(1, "#cisfun$ ", 9);
 		if (getline(&cmd_line, &size_line, stdin) < 0)
 			break;
 		if (*cmd_line == EOF)
-			break;
+			exit(0);
 		cmd_line[_strlen(cmd_line) - 1] = '\0';
 
 		args = malloc(sizeof(char *) * 2);
@@ -38,10 +38,12 @@ int main(int ac, char *av[])
 		{
 			execve(args[0], av, environ);
 			perror(av[0]);
+			exit(98);
 		}
 		wait(&status);
 		for (i = 0; i < 2; i++)
 			free(args[i]);
+		write(1, "#cisfun$ ", 9);
 	}
 	free(args);
 	free(cmd_line);
