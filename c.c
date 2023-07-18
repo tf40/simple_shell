@@ -14,9 +14,10 @@ int main(int ac, char *av[])
 	int status, i;
 
 	(void) ac;
-	write(1, "#cisfun$ ", 9);
 	for (;;)
 	{
+		if (isatty(STDIN_FILENO) == 1)
+			write(1, "#cisfun$ ", 9);
 		if (getline(&cmd_line, &size_line, stdin) < 0)
 			break;
 		if (*cmd_line == EOF)
@@ -31,6 +32,7 @@ int main(int ac, char *av[])
 			perror("Error: ");
 		_strcpy(args[0], cmd_line);
 		args[1] = NULL;
+		fflush(stdout);
 		child_pid = fork();
 		if (child_pid < 0)
 			perror("Error: ");
@@ -40,10 +42,10 @@ int main(int ac, char *av[])
 			perror(av[0]);
 			exit(98);
 		}
-		wait(&status);
+		else
+			wait(&status);
 		for (i = 0; i < 2; i++)
 			free(args[i]);
-		write(1, "#cisfun$ ", 9);
 	}
 	free(args);
 	free(cmd_line);
