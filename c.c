@@ -23,7 +23,6 @@ int main(int ac, char *av[])
 		if (*cmd_line == EOF)
 			exit(0);
 		cmd_line[_strlen(cmd_line) - 1] = '\0';
-
 		args = malloc(sizeof(char *) * 2);
 		if (args == NULL)
 			perror("Error: ");
@@ -42,8 +41,7 @@ int main(int ac, char *av[])
 			perror(av[0]);
 			exit(98);
 		}
-		else
-			wait(&status);
+		wait(&status);
 		for (i = 0; i < 2; i++)
 			free(args[i]);
 	}
